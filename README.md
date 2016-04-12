@@ -1,5 +1,6 @@
 # Naive-Bayesian-classification-of-programming-languages
 Use Naive-Bayes  to  classfy the programming-languages(now I can classfy three languages ,they are C++ ,Python,Java)
+Bayes.cpp is the main file
 With 9 training files  and 3 test files.
 How to run the program?
 Just Cin These Training Files:

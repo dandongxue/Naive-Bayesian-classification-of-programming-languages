@@ -7,5 +7,13 @@ Java.txt
 Java1.txt
 Java2.txt
 C++.txt
-C++.txt
-C++.txt
+C++1.txt
+C++2.txt
+Python.txt
+Python1.txt
+Python2.txt
+And Finally Cin the Test File:
+TestC++.txt
+
+OK!that's all!
+

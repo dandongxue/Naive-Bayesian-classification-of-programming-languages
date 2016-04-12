@@ -1,0 +1,73 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class Test7 {
+public static void main(String[] args) {
+   // TODO Auto-generated method stub
+   List<Integer> list = new ArrayList<Integer>();
+
+   list.add(2);
+   list.add(2);
+   list.add(2);
+   list.add(1);
+   list.add(1);
+
+   Test7 t = new Test7();
+   t.sortList(list);
+
+   double sum = 0.00;
+   while (list.size() != 0) {
+    if (list.size() > 4) {
+     sum += 5 * 8 * (1.00 - 0.25);
+     t.subList(list);
+
+    } else if (list.size() > 3) {
+     sum += 4 * 8 * (1.00 - 0.20);
+     t.subList(list);
+
+    } else if (list.size() > 2) {
+     sum += 3 * 8 * (1.00 - 0.10);
+     t.subList(list);
+
+    } else if (list.size() > 1) {
+     sum += 2 * 8 * (1.00 - 0.05);
+     t.subList(list);
+
+    } else if (list.size() > 0) {
+     sum += 1 * 8 * (1.00 - 0.00);
+     t.subList(list);
+
+    }
+   }
+
+   System.out.println("sum:" + sum);
+}
+
+public List<Integer> sortList(List<Integer> list) {
+   for (int i = 0; i < list.size(); i++) {
+    for (int j = i; j < list.size() - 1; j++) {
+     Integer tempj = list.get(j + 1);
+     Integer tempi = list.get(i);
+     if (tempi < tempj) {
+      int temp = tempj;
+      list.set(j + 1, tempi);
+      list.set(i, temp);
+     }
+
+    }
+   }
+   return list;
+}
+
+public List<Integer> subList(List<Integer> list) {
+   for (int i = 0; i < list.size(); i++) {
+    list.set(i, list.get(i) - 1);
+
+    if (list.get(i) == 0) {
+     list.remove(i);
+     i--;
+    }
+   }
+   return list;
+}
+}

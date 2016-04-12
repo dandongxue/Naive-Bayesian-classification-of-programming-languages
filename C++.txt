@@ -1,0 +1,57 @@
+#include<iostream>
+#include<fstream>
+using namespace std;
+char ans[201];
+void Strfun(const char *pw)
+{
+int i=0;
+  while(*pw!='\0')
+  {
+	if(*pw =='\t')
+	{
+		*pw++;
+		continue;
+	}
+	if(*pw=='/'&&*(pw+1)=='/')
+	{
+//	ans[0]='\0';
+	i=0;
+	break;
+	}
+    ans[i++]=*pw++;
+  }
+  ans[i]='\0';
+}
+int main(){
+	ifstream fin("word.in");
+	ofstream fout("word.out");
+	char sline[201];
+	char s[17]={"  *,.<({\";#>)}!="};
+	char *pw;
+	int count=0;
+	fin.getline(sline,201);
+	while(!fin.eof()){
+		pw=strtok(sline,s); //提取字符串sline中的首个单词
+		while(pw!=0){
+			count++;
+			//cout<<pw<<endl;
+			Strfun(pw);
+			if(strlen(ans)<2){
+			pw=strtok(0,s);
+			}
+			else
+			{
+			cout<<ans<<"   "<<strlen(ans)<<endl;
+			pw=strtok(0,s);
+			 //提取字符串sline中的下一个单词
+			}
+			
+		}
+		
+		fin.getline(sline,201);
+	}
+	fout <<count <<endl;
+	fin.close();
+	fout.close();
+	return 0;
+}

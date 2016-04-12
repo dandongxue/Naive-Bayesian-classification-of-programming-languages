@@ -1,0 +1,45 @@
+vector <vector <string> > state;//实例集
+vector <string> item(MAXLEN);//对应一行实例集
+vector <string> attribute_row;//保存首行即属性行数据
+string end("end");//输入结束
+string yes("yes");
+string no("no");
+string blank("");
+string temp="";
+map<string,vector < string > > map_attribute_values;//存储属性对应的所有的值
+map<string,string>map_pre;
+int tree_size = 0;
+struct Node{//决策树节点
+	string attribute;//属性值
+	string arrived_value;//到达的属性值
+	vector<Node *> childs;//所有的孩子
+	Node(){//结构体的构造函数
+		attribute = blank;
+		arrived_value = blank;
+	}
+};
+Node * root;
+
+//根据数据实例计算属性与值组成的map
+void ComputeMapFrom2DVector(){     //完成列名---》各列的映射
+	unsigned int i,j,k;
+	bool exited = false;
+	vector<string> values;
+	cout<<"size"<<values.size()<<endl;
+	for(i = 1; i < MAXLEN-1; i++){    //按照列遍历从中拿出了1.2.3.4列用来参与计算
+		for (j = 1; j < state.size(); j++){
+
+			for (k = 0; k < values.size(); k++){
+				if(!values[k].compare(state[j][i])) 
+					exited = true;
+			}
+			if(!exited){
+				values.push_back(state[j][i]);   //注意Vector的插入都是从前面插入的注意更新it始终指向vector头
+			}
+			exited = false;
+		}
+
+		map_attribute_values[state[0][i]] = values;
+		values.erase(values.begin(), values.end());//清楚values中的项
+	}	
+}

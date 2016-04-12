@@ -1,0 +1,705 @@
+public class SwitchTest {
+ 
+	
+	public static void main(String[] args) {
+		int s=87;
+		switch(s/10){
+                case 10 :System.out.println("A");break; 
+		case 9 :System.out.println("A");break; 
+		case 8 :System.out.println("B");break;
+		case 7 :System.out.println("c");break;
+		case 6 :System.out.println("D");break;
+		default :System.out.println("E");break; 
+			
+		}
+	}
+
+}
+package pm;
+
+public class SwitchTest{
+	public static void main(String[] args){
+	    
+	    for(int i=1;i<=9;i++){
+		  for(int j=1;j<=i;j++){
+			 System.out.print(j+"*"+i+"="+(i*j)+"\t");
+		 }
+		  System.out.println();
+		
+	   }
+	}
+}
+
+
+
+package pm;
+import java.util.Scanner;
+public class SwitchTest {
+	
+	public static void main(String[] args) {
+		
+
+		Scanner sc=new Scanner(System.in);
+		while (true) {
+			System.out.println("请输入要转换的温度类型：C 或 F");
+			String s = sc.next().trim();
+			if ("c".equalsIgnoreCase(s)) {
+				//做摄氏向华摄的转换
+				System.out.println("请输入要转换摄氏的温度:..");
+				double db = sc.nextDouble();
+				double db2 = (db * 9 / 5) + 32;
+				System.out.println("对应的华氏温度：" + db2 + "F");
+			} else if ("f".equalsIgnoreCase(s)) {
+				//做华摄向摄氏的转换
+				System.out.println("请输入要转换华氏的温度:..");
+				double db = sc.nextDouble();
+				double db2 = (db - 32) * 5 / 9;
+				System.out.println("对应的摄氏温度：" + Math.round(db2) + "C");
+			}else if("exit".equalsIgnoreCase(s)){
+				break;
+			}
+		}
+	}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+package pm;
+
+import java.util.Scanner;
+
+public class SwitchTest{
+	public static void main(String[] args) {
+		Scanner sc=new Scanner(System.in);
+		boolean flag=true;
+		while (flag) {
+			System.out.println("请输入要转换的温度,如：50c或100f");
+			String str = sc.nextLine().trim();
+			if (str.endsWith("c") || str.endsWith("C")) {
+				//做摄氏向华摄的转换  30c
+				String st = str.substring(0, str.length() - 1);
+				double db = Double.parseDouble(st);//[0,2)
+				//2 double db=Double.valueOf(st).doubleValue();
+				double db2 = (db * 9 / 5) + 32;
+				System.out.println("对应的华氏温度：" + db2 + "F");
+			} else if (str.endsWith("f") || str.endsWith("F")) {
+				//做华摄向摄氏的转换 
+				String st = str.substring(0, str.length() - 1);
+				double db = Double.parseDouble(st);//[0,2)
+				//2 double db=Double.valueOf(st).doubleValue();
+				double db2 = (db - 32) * 5 / 9;
+				System.out.println("对应的摄氏温度：" + Math.round(db2) + "C");
+			}else if("exit".equalsIgnoreCase(str)){
+				flag=false;
+			}
+		}
+	}
+}
+package pm;
+
+public class SwitchTest {
+	
+	public static void main(String[] args) {
+		int a=1,b=2,c=3,d=0;
+		d=a>b?a:b;
+		d=a>b?(a>c?a:c):(b>c?b:c);
+		System.out.println("最多数为："+d);
+		
+	}
+
+}
+
+package one;
+
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+public class Jsq implements ActionListener {
+
+	private JFrame frame;
+
+	private JButton[] bus;
+
+	private JTextField jtx;
+
+	private JButton bu;
+
+	private char[] strs;
+
+	private String d_one = "";
+
+	private String operator;
+
+	public static void main(String[] args) {
+		new Jsq();
+	}
+
+	/* 利用构造进行实例化 */
+	public Jsq() {
+		frame = new JFrame("计算器");
+		jtx = new JTextField(14);
+		bus = new JButton[16];
+		strs = "789/456*123-0.+=".toCharArray();
+		for (int i = 0; i < 16; i++) {
+			bus[i] = new JButton(strs[i] + "");
+			bus[i].addActionListener(this);
+		}
+		bu = new JButton("C");
+		bu.addActionListener(this);
+		init();
+	}
+
+	/* GUI 初始化 */
+	public void init() {
+		JPanel jp1 = new JPanel();
+		jp1.add(jtx);
+		jp1.add(bu);
+		frame.add(jp1, BorderLayout.NORTH);
+
+		JPanel jp2 = new JPanel();
+		jp2.setLayout(new GridLayout(4, 4));
+		for (int i = 0; i < 16; i++) {
+			jp2.add(bus[i]);
+		}
+
+		frame.add(jp2, BorderLayout.CENTER);
+
+		frame.pack();
+		frame.setLocation(300, 400);
+		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+	}
+
+	/* 事件的处理 */
+
+	public void actionPerformed(ActionEvent arg0) {
+		/*获取输入字符*/
+		String conn = arg0.getActionCommand();
+		/*清除计算器内容*/
+		if ("C".equals(conn)) {
+			d_one = "";
+			operator = "";
+			jtx.setText("");
+			return;
+		}
+		/*暂未实现该功能*/
+		if(".".equals(conn)){
+			return;
+		}
+		/*记录运算符，保存运算数字*/
+		if (("+-*/".indexOf(conn)) != -1) {
+			if("".equals(d_one) && "".equals(jtx.getText())) return;
+			d_one = jtx.getText();
+			operator = conn;
+			jtx.setText("");
+			return;
+		}
+		/*计算结果*/
+		if ("=".equals(conn)) {
+			if("".equals(d_one) && "".equals(jtx.getText())) return;
+			double db = 0;
+			if ("+".equals(operator)) {
+				db = Double.parseDouble(d_one)
+						+ Double.parseDouble(jtx.getText());
+				jtx.setText(db + "");
+			}
+			if ("-".equals(operator)) {
+				db = Double.parseDouble(d_one)
+						- Double.parseDouble(jtx.getText());
+				jtx.setText(db + "");
+			}
+			if ("*".equals(operator)) {
+				db = Double.parseDouble(d_one)
+						* Double.parseDouble(jtx.getText());
+				jtx.setText(db + "");
+			}
+			if ("/".equals(operator)) {
+				db = Double.parseDouble(d_one)
+						/ Double.parseDouble(jtx.getText());
+				jtx.setText(db + "");
+			}
+			d_one = db + "";
+			return;
+		}
+		//界面显示
+		jtx.setText(jtx.getText() + conn);
+
+	}
+
+}
+
+
+package pm;
+
+public class SwitchTest{
+	public static void main(String[] args){
+	    int n=5;
+	    for(int i=0;i<=n;i++){
+		  for(int j=0;j<n-i;j++){
+			 System.out.print(" ");
+		 }
+		 for(int k=0;k<2*i-1;k++){
+			 System.out.print("*");
+			 
+		 }
+		 System.out.println();
+	   }
+	}
+}
+
+
+package pm;
+import java.util.Scanner;
+public class SwitchTest{
+	public static void main(String[] args){
+	    String name=null;
+	    Scanner sca=new Scanner (System.in);
+	    char firstChar;
+	    do{
+	    	System.out.println("please input your name");
+	    	name=sca.nextLine();
+	    	firstChar=name.charAt(0);
+	    }while(!(firstChar>='a' && firstChar<='z' || 
+	    		firstChar>='A' && firstChar<='Z'));
+	    	System.out.println("OK! your name is:"+name);
+	    	
+	}
+}
+
+
+package pm;
+
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class SwitchTest {
+	
+	private JFrame frame;
+	
+	private  JLabel jl1;
+	
+	private JLabel jl2;
+	
+	private JLabel jl3;
+	
+	/*主方法*/
+	public static void main(String[] args) {
+		
+		new SwitchTest().getTime();
+		
+	}
+	/*倒计时的主要代码块*/
+	private  void getTime(){
+		long time=1*3600;
+		long hour =0 ;
+		long  minute =0 ;
+		long seconds=0;
+		
+		while(time>=0){
+			hour=time/3600;
+			minute=(time-hour*3600)/60;
+			seconds=time-hour*3600-minute*60;
+			jl1.setText(hour+"时");
+			jl2.setText(minute+"分");
+			jl3.setText(seconds+"秒");
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			time--;
+		}
+		
+		
+	}
+	/*构造 实现界面的开发 GUI */
+	public SwitchTest(){
+		frame = new JFrame("倒计时");
+		jl1 = new JLabel();
+		jl2 = new JLabel();
+		jl3 = new JLabel();
+		
+		init();
+		
+	}
+	/*组件的装配*/
+	private void init(){
+		JPanel jp=new JPanel();
+		jp.add(jl1);
+		jp.add(jl2);
+		jp.add(jl3);
+		
+		frame.add(jp);
+		
+		frame.setVisible(true);
+		frame.setLocation(300,400);
+		frame.setSize(300, 200);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+}
+
+
+
+
+
+
+public class Sjx{
+	public static void main(String[] args){
+	    int SIZE=19;
+	    for(int i=0;i<SIZE;i++){
+	    	if(i<10){
+	    		System.out.print("  "+i);//两个空格 
+	    	}else{
+	    		System.out.print("  "+(char)(i+'a'-10));//两个空格 
+	    	}
+	    }
+	    System.out.println();
+	   // 	System.out.print(i<10?(char)(i+'0'):(char)(i+'a'-10));
+		  for(int i=0;i<SIZE;i++){
+			  if(i<10){
+				  System.out.print(i+" ");//一个空格	  
+			  }else{
+				  System.out.print((char)(i+'a'-10)+" ");//一个空格
+			  }
+			  for(int j=0;j<SIZE;j++){
+				  System.out.print("*"+"  ");//两个空格 
+			  }
+			  System.out.println();
+		  }
+	}
+}
+			
+
+package day04;
+
+public class ArrayTest {
+    public static void main(String[] args){
+    	char[][] arr=new char[4][7];
+    	String s="朝辞白帝彩云间千里江陵一日还两岸猿声啼不住轻舟已过万重山";
+    	for(int i=0;i<arr.length;i++){
+    		for(int j=0;j<arr[i].length;j++){
+    			arr[i][j]=s.charAt(i*7+j);
+    		}
+    	} 
+    		for(int i=0;i<arr[0].length;i++){
+    			for(int j=0;j<arr.length;j++){
+    				System.out.print(arr[arr.length-j-1][i]+"  ");
+    			}
+    			System.out.println();
+    		}
+    	
+    }
+}
+
+
+
+package day02;
+public class Fangk{
+	public static void main(String[] args){
+//		for(int i=1000;i<=9999;i++){
+//			int q=i/1000;
+//			int b=i/100%10;
+//			int s=i/10%10;
+//			int g=i%10;
+//			if(q>b && s>g && q+g==b+s && b%2!=0){
+//				System.out.println("The Min Number is:"+i);
+//				break;
+//			}
+//		}
+		
+		
+		
+		
+	loop1:	for(int q=1;q<=9;q++){
+	loop2:		for(int b=0;b<=9;b++){
+		           if(b%2==0){
+			          continue loop2;
+		             }
+				for(int s=0;s<=9;s++){
+					for(int g=0;g<=9;g++){
+						
+						if(q>b && s>g && q+g==b+s){
+							System.out.println("The Min Number is:"+(q*1000+b*100+s*10+g));
+							break loop1;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+
+package day02;
+public class Fangk{
+	public static void main(String[] args){
+	int num=14;
+	boolean flag=true;
+	for(int i=2;i<=num/2;i++){
+		if(num%i==0){
+			
+			flag=false;
+			break;
+		
+		}
+	}
+	if(flag){
+		System.out.println(num+" is a prime number!");
+	}else{
+		System.out.println(num+" is not a prime number!");
+	}
+	}
+}
+
+
+
+
+
+
+
+
+import java.util.Scanner;
+
+public class A1{
+    public static void main(String[] args){
+    	int n;
+    	Scanner sca=new Scanner(System.in);
+    	System.out.println("please input a number:");
+    	n=sca.nextInt();
+    	if(isPrimeNumber(n)){
+    		System.out.println(n+"is a prime number!");
+    	}else{
+    		System.out.println(n+"is not a prime number!");
+    	}
+    }
+    public static boolean isPrimeNumber(int n){
+    	for(int i=2;i<=n/2;i++){
+    		if(n%i==0){
+	            return false;
+		}
+          
+    	}
+		return true;
+    }
+}
+
+package day02;
+public class Daoxu{
+	public static void main(String[] args){
+	int olddata=3758;
+	int newdata=0;
+	while(olddata!=0){
+		for(int i=0;i<4;i++){
+			newdata=newdata*10+olddata%10;
+			olddata=olddata/10;
+		}
+		System.out.println("newdata="+newdata);
+		
+		
+	}
+	}
+}
+package day04;
+
+import java.util.Scanner;
+
+public class ArrayTest {
+    public static void main(String[] args){
+    	int n;
+    	Scanner s=new Scanner(System.in);
+    	System.out.println("please input a number:");
+    	n=s.nextInt();
+    
+    	for(int i=31;i>=0;i--){
+    		if((n&(1<<i))!=0){
+    			System.out.print("1");
+    		}else{
+    			System.out.print("0");
+    		}
+    		if((32-i)%8==0){
+    			System.out.print(" ");
+    		}
+    	}
+    	
+    }
+}  
+
+
+
+package day02;
+
+public class Fangk {
+	public static void main(String[] args){
+		int m=5,n=6;
+		for(int i=0;i<n;i++){
+			System.out.print("* ");
+		}
+		System.out.println();
+	
+	    for(int i=0;i<m-2;i++){
+	    	System.out.print("* ");
+	    	for(int j=0;j<n-2;j++){
+	    		System.out.print("  ");
+	    	}
+	    	System.out.print("*");
+	    	System.out.println();
+	    }
+	    for(int i=0;i<n;i++){
+			System.out.print("* ");
+		}
+	
+	}
+}
+
+
+
+
+
+package day02;
+
+import java.util.Scanner;
+
+public class Csz {
+
+	public static void main(String[] args) {
+		Scanner s = new Scanner(System.in);
+		int num = (int) (Math.random() * 1000);
+		int m=0;
+		
+		for(int i=9;i>=0;i--){
+		System.out.println("please input your number! ");
+		m=s.nextInt();
+		if(m>num){
+			System.out.println("Too large!");
+		   
+		}else if(m<num){
+			System.out.println("Too small!");
+			
+		}else{
+			System.out.println("You are right!");
+			break;
+		}
+		if(i>0){
+			System.out.println("还有"+i+"次机会！");
+		}
+		}
+		if( m!=num){
+			System.out.println("下次再来吧！");
+		}
+	}	
+}
+
+package hotel;
+
+import java.util.Scanner;
+
+public class HotelManager {
+	private static String[][] rooms;// 表示房间
+
+	public static void main(String[] args) {
+		rooms = new String[10][12];
+		String comm;// 表示用户输入的命令
+		for (int i = 0; i < rooms.length; i++) {
+			for (int j = 0; j < rooms[0].length; j++) {
+				rooms[i][j] = "EMPTY";
+			}
+		}
+		//
+		while (true) {
+			System.out.println("请输入命令：");
+			Scanner sca = new Scanner(System.in);
+			System.gc();
+			comm = sca.next();
+			if ("search".equalsIgnoreCase(comm)) {
+				search();
+			} else if ("in".equalsIgnoreCase(comm)) {
+				int roomNo = sca.nextInt();
+				String name = sca.next();
+				in(roomNo, name);
+			} else if ("out".equalsIgnoreCase(comm)) {
+				int roomNo = sca.nextInt();
+				out(roomNo);
+			} else if ("exit".equalsIgnoreCase(comm)) {
+				System.out.println("程序退出...");
+				break;
+			} else {
+				System.out.println("命令输入错误，请重新输入：");
+			}
+
+		}
+
+	}
+
+	private static void out(int roomNo) {
+		if("EMPTY".equals(rooms[(roomNo/100)-1][(roomNo%100)-1])){
+			System.out.println("该房间没有客人入住，退房失败！");
+			return;
+		}
+		rooms[(roomNo/100)-1][(roomNo%100)-1]="EMPTY";
+		System.out.println(roomNo+"退房成功！");
+
+	}
+
+	private static void in(int roomNo, String name) {
+		if(!"EMPTY".equals(rooms[(roomNo/100)-1][(roomNo%100)-1])){
+			System.out.println("该房间已经有客人入住！");
+			return;
+		}
+		rooms[(roomNo/100)-1][(roomNo%100)-1]=name;
+		System.out.println(name+"成功入住"+roomNo+"房间！");
+
+	}
+
+	private static void search() {
+		for (int i = 0; i < rooms.length; i++) {
+			//打印房间号
+			for (int j = 0; j < rooms[0].length; j++) {
+				if (j + 1 < 10) {
+					System.out.print(i + 1 + "0" + (j + 1) + "	");
+				} else {
+					System.out.print(i + 1 + "" + (j + 1) + "	");
+				}
+			}
+			//打印房间状态
+			System.out.println();
+			for (int j = 0; j < rooms[0].length; j++) {
+				System.out.print(rooms[i][j] + "	");
+			}
+			System.out.println();
+		}
+
+	}
+
+}
+	
+package day05.student_manager;
+import java.util.Scanner;
+public class StudentManager {
+	static int[][] scores=new int[6][5];
+	static String[] students={"zhangsan","lisi","wangwu","zhaoliu","qianqi","liuba"};
+	static String[] courses={"corejava","jdbc","servlet","jsp","ejb"};
+	
+	public static void main(String[] args) {
+		for(int i=0;i<scores.length;i++){
+			for(int j=0;j<scores[i].length;j++){
+				scores[i][j]=(int)(Math.random()*100);
+			}

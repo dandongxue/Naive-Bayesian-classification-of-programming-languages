@@ -1,0 +1,42 @@
+f(count[0] == 0 || count[1] == 0 ) return 0;//全部是正实例或者负实例
+	//具体计算熵 根据[+count[0],-count[1]],log2为底通过换底公式换成自然数底数
+	double sum = count[0] + count[1];
+	double entropy = -count[0]/sum*log(count[0]/sum)/log(2.0) - count[1]/sum*log(count[1]/sum)/log(2.0);
+	return entropy;
+}
+	
+//计算按照属性attribute划分当前剩余实例的信息增益
+double ComputeGain(vector <vector <string> > remain_state, string attribute){
+	unsigned int j,k,m;
+	//首先求不做划分时的熵
+	double parent_entropy = ComputeEntropy(remain_state, attribute, blank, true);
+	double children_entropy = 0;
+	//然后求做划分后各个值的熵
+	vector<string> values = map_attribute_values[attribute];
+	vector<double> ratio;
+	vector<int> count_values;
+	int tempint;
+	for(m = 0; m < values.size(); m++){
+		tempint = 0;
+		for(k = 1; k < MAXLEN - 1; k++){
+			if(!attribute_row[k].compare(attribute)){
+				for(j = 1; j < remain_state.size(); j++){
+					if(!remain_state[j][k].compare(values[m])){
+						tempint++;
+					}
+				}
+			}
+		}
+		count_values.push_back(tempint);
+	}
+	
+	for(j = 0; j < values.size(); j++){
+		ratio.push_back((double)count_values[j] / (double)(remain_state.size()-1));
+	}
+	double temp_entropy;
+	for(j = 0; j < values.size(); j++){
+		temp_entropy = ComputeEntropy(remain_state, attribute, values[j], false);
+		children_entropy += ratio[j] * temp_entropy;
+	}
+	return (parent_entropy - children_entropy);	
+}

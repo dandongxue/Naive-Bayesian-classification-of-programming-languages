@@ -1,0 +1,316 @@
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+import java.lang.*;
+
+public class Students extends Applet implements ActionListener
+{
+ Vector StuInf=new Vector();
+ StudentInf SI;
+ String xm;
+ String bj;
+ int i,j,xh,cj;
+ static int mid;
+ Label prompt1=new Label("学生成绩管理系统");
+ Label prompt2=new Label("   用户:");
+ Label prompt3=new Label("   密码:");
+ Label prompt4=new Label("   班级:");
+ Label prompt5=new Label("   成绩:");
+ TextField input1=new TextField(8);
+ TextField input2=new TextField(8);
+ TextField input3=new TextField(8);
+ TextField input4=new TextField(8);
+ Button btn1=new Button("登录");
+ Button btn2=new Button("增加");
+ Button btn3=new Button("修改");
+ Button btn4=new Button("删除");
+ 
+ public void init()
+ {
+  setLayout(new GridLayout(6,3));
+  add(new Label());
+  add(prompt1);
+  add(new Label());
+  add(prompt2);
+  add(input1);
+  add(new Label());
+  add(prompt3);
+  add(input2);
+  add(btn1);
+  add(prompt4);
+  add(input3);
+  add(new Label());
+  add(prompt5);
+  add(input4);
+  add(new Label());
+  add(btn2);
+  add(btn3);
+  add(btn4);
+  prompt4.setVisible(false);
+  prompt5.setVisible(false);
+  input3.setVisible(false);
+  input4.setVisible(false);
+  btn2.setVisible(false);
+  btn3.setVisible(false);
+  btn4.setVisible(false);
+  btn1.addActionListener(this);
+  btn2.addActionListener(this);
+  btn3.addActionListener(this);
+  btn4.addActionListener(this);
+ }
+ public void actionPerformed(ActionEvent e)
+ {
+  if(e.getActionCommand()=="登录")
+  {
+   String a,b;
+   a=input1.getText();
+   b=input2.getText();
+   input1.setText("");
+   if((a.equals("12")==true)&&(b.equals("12")==true))
+   {
+    prompt2.setText("   姓名:");
+    prompt3.setText("   学号:"); 
+    prompt4.setVisible(true);
+    prompt5.setVisible(true);
+    input3.setVisible(true);
+    input4.setVisible(true);
+    btn2.setVisible(true);
+    btn3.setVisible(true);
+    btn4.setVisible(true);
+    btn3.setEnabled(false);
+    btn4.setEnabled(false);
+    btn1.setLabel("查询");
+    input1.setText("登录成功");
+    input1.selectAll();
+   }
+   else
+   input2.setText("用户名或密码错");
+  }
+  if(e.getActionCommand()=="增加")
+  {
+   boolean scucss=true;
+   try
+   {
+    XingMing();
+   }
+   catch(EmptyException as)
+   {
+    input1.setText("姓名不能为空");
+    scucss=false;
+   }
+   try
+   {
+    xh=Integer.parseInt(input2.getText());
+   }
+   catch(NumberFormatException m)
+   {
+    input2.setText("学号为空或格式错");
+    scucss=false;
+   } 
+   bj=input3.getText();
+   try
+   {
+    ChengJi();
+   }
+   catch(EmptyException as)
+   {
+    cj=-1;
+   }
+   catch(OverException dd)
+   {
+    input4.setText("应在0-100间");
+    scucss=false;
+   }
+   catch(NumberFormatException cm)
+   {
+    input4.setText("成绩应为数据");
+    scucss=false;  
+   }
+   if(scucss==true)
+   {
+   SI=new StudentInf(xm,xh,bj,cj);
+   Insert(SI);
+   }
+  }
+  if(e.getActionCommand()=="修改")
+  {
+   xm=input1.getText();
+   xh=Integer.parseInt(input2.getText());
+   bj=input3.getText();
+   cj=Integer.parseInt(input4.getText());
+   SI=new StudentInf(xm,xh,bj,cj);
+   StuInf.setElementAt(SI, mid);
+   btn3.setEnabled(false);
+  }
+  if(e.getActionCommand()=="删除")
+  {
+   StuInf.removeElementAt(mid); 
+   btn4.setEnabled(false);
+   input1.setText("删除成功");
+   input2.setText("");
+   input3.setText("");
+   input4.setText("");
+  }
+  if(e.getActionCommand()=="查询")
+  {
+   boolean right=true;
+   try
+   {
+    xh=Integer.parseInt(input2.getText());
+   }
+   catch(NumberFormatException m)
+   {
+    input2.setText("学号为空或格式错");
+    right=false;
+   } 
+   if(right==true)
+   {
+    search(xh);
+    btn3.setEnabled(true);
+    btn4.setEnabled(true);
+   }
+  }
+  
+ }
+ //查找方法
+ public void search(int k)
+ {
+   boolean  exist=false;
+   int low=0;
+   int high=StuInf.size()-1;
+   while(low<=high)
+   {
+    mid=(high+low)/2;
+    StudentInf a1=(StudentInf) StuInf.elementAt(mid);
+    if(a1.getStuNo()==k)
+    {
+     SI=(StudentInf) StuInf.elementAt(mid);
+     String x = String.valueOf(SI.getStuNo());
+     exist=true;
+     input1.setText(SI.getname());
+     input1.selectAll();
+     input2.setText("0"+x);
+     input3.setText(SI.getClassNo());
+     if(SI.getLevel()==-1)
+      input4.setText("未参加考试");
+     else
+     {
+      String y = String.valueOf(SI.getLevel());
+      input4.setText(y);
+     }
+     break;
+    }
+    else if(a1.getStuNo()<k)
+    low=mid+1;
+    else
+    high=mid-1; 
+   }
+   if(exist==false)
+   {
+    input1.setText("无此学号学生信息");
+    input1.selectAll();
+   }
+ }
+//添加方法
+ public void Insert(StudentInf q)
+ {
+  int i=0;
+  
+  if(StuInf.isEmpty()==true) 
+   {
+    StuInf.addElement(q);
+    input1.setText("");
+    input2.setText("");
+    input3.setText("");
+    input4.setText("");
+   }
+  else
+  {
+   StudentInf xh;
+   xh=(StudentInf) StuInf.firstElement();
+   while(xh.getStuNo()<q.getStuNo())
+   {
+    i++;
+    if(i<StuInf.size())
+    xh=(StudentInf) StuInf.elementAt(i);
+    else 
+    break;
+   }   
+   if(xh.getStuNo()==q.getStuNo())
+   {
+    input2.setText("此学生信息已存在");
+    input2.requestFocus();
+    input2.selectAll();
+   }
+   else 
+   {
+    StuInf.insertElementAt(q,i);  
+    input1.setText("");
+    input2.setText("");
+    input3.setText("");
+    input4.setText("");
+   }
+  }  
+ }
+ 
+ //异常类
+ class OverException extends Exception
+ {
+  String over;
+ } 
+ class EmptyException extends Exception
+ {
+  String empty;
+ }
+ void XingMing() throws EmptyException
+ {
+  if((input1.getText()).equals(""))
+   throw (new EmptyException());
+  else
+   xm=input1.getText();
+ }
+ void ChengJi() throws OverException,EmptyException 
+ {
+  if((input4.getText()).equals(""))
+  throw(new EmptyException());
+  else
+  cj=Integer.parseInt(input4.getText());
+  if(cj<0||cj>100)
+  throw (new  OverException());
+ }
+ 
+ //学生信息类
+ public class StudentInf
+ {
+  private String name;
+  private int StuNo;
+  private String ClassNo;
+  private int Level;
+  StudentInf(String xingming,int xuehao,String banji,int chengji)
+  {
+   name=xingming;
+   StuNo=xuehao;
+   ClassNo=banji;
+   Level=chengji;
+  }
+  public int getStuNo()
+  {
+   return StuNo;
+  }
+  public String getname()
+  {
+   return name;
+  }
+  public String getClassNo()
+  {
+   return ClassNo;
+  }
+  public int getLevel()
+  {
+   return Level;
+  }
+ }
+
+}
+
